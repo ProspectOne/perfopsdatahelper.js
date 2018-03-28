@@ -1,0 +1,19 @@
+{
+  "name": "perfopsdatahelper",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dataHelper.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ProspectOne/perfopsdatahelper.js.git"
+  },
+  "author": "ProspectOne",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ProspectOne/perfopsdatahelper.js/issues"
+  },
+  "homepage": "https://github.com/ProspectOne/perfopsdatahelper.js#readme"
+}
