@@ -140,11 +140,11 @@
         sortByField: {
             name : {
               target : ['continent','country', 'provider','resolver', 'cdn_country', 'cdn_provider'],
-              revert: false
+              reverse: false
             },
             isRootServer: {
               target: ['resolver'],
-              revert: true
+              reverse: false
             }
         },
         /**
