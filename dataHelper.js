@@ -235,19 +235,13 @@
             if(data && $.isArray(data) && data.length && data[0][field]) {
                 if(typeof data[0][field] === 'string') {
                   if(reverse) {
-                      data.sort(function (a, b) {
-                        return b[field].toLowerCase().localeCompare(a[field].toLowerCase());
-                      });
+                      data.sort(function (a, b) { return b[field].toLowerCase().localeCompare(a[field].toLowerCase()); });
                   } else {
-                      data.sort(function (a, b) {
-                        return a[field].toLowerCase().localeCompare(b[field].toLowerCase());
-                      });
+                      data.sort(function (a, b) { return a[field].toLowerCase().localeCompare(b[field].toLowerCase()); });
                   }
                 } else {
                   if(reverse) {
-                    data.sort(function (a, b) {
-                      return (a[field] < b[field])? 1 : (a[field] > b[field]) ? -1 : 0;
-                    });
+                    data.sort(function (a, b) { return (a[field] < b[field])? 1 : (a[field] > b[field]) ? -1 : 0; });
                   } else {
                     data.sort(function (a, b) { return (b[field] < a[field])? 1 : (b[field] > a[field]) ? -1 : 0; });
                   }
