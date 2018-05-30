@@ -158,7 +158,7 @@
             if(typeof hash !== 'undefined') {
                 $.extend(this.hash, hash);
             }
-            if(typeof hash !== 'undefined') {
+            if(typeof sortByField !== 'undefined') {
                 $.extend(this.sortByField, sortByField);
             }
             this.host = window.location.host;
