@@ -137,15 +137,29 @@
         },
         loading: {},
         host: '',
+        sortByField: {
+            name : {
+              target : ['continent','country', 'provider','resolver', 'cdn_country', 'cdn_provider'],
+              reverse: false
+            },
+            isRootServer: {
+              target: ['resolver'],
+              reverse: false
+            }
+        },
         /**
-         * Init Helper
-         * @param apiUrl string
-         * @param hash Object
-         */
-        init: function (apiUrl, hash) {
-          this.apiUrl = apiUrl || 'api.perfops.net';
+       * Init Helper
+       * @param apiUrl
+       * @param hash
+       * @param sortByField
+       */
+        init: function (apiUrl, hash, sortByField) {
+            this.apiUrl = apiUrl || 'api.perfops.net';
             if(typeof hash !== 'undefined') {
                 $.extend(this.hash, hash);
+            }
+            if(typeof sortByField !== 'undefined') {
+                $.extend(this.sortByField, sortByField);
             }
             this.host = window.location.host;
         },
@@ -189,9 +203,12 @@
                     if(toArray === true && typeof data === 'object') {
                         data = $.map(data, function(item){ return item;});
                     }
-                    if($.inArray(target,['continent','country', 'provider','resolver', 'cdn_country', 'cdn_provider']) !== -1) {
-                        data = dataHelper.sortDataByField(data,'name');
-                    }
+                    $.each(dataHelper.sortByField, function(index, item){
+                      if($.inArray(target,item.target) !== -1) {
+                        data = dataHelper.sortDataByField(data, index, item.reverse);
+                      }
+                    });
+
                     //Save data to local storage
                     localStorage.setItem(dataHelper.getSaveKey(target),JSON.stringify(data));
                     //Save expire date of data
@@ -208,13 +225,28 @@
             return localData;
         },
         /**
-         *
-         * @param data
-         * @param field
-         */
-        sortDataByField: function(data, field) {
+       *
+       * @param data
+       * @param field
+       * @param reverse
+       * @returns {*}
+       */
+        sortDataByField: function(data, field, reverse) {
             if(data && $.isArray(data) && data.length && data[0][field]) {
-                data.sort(function (a, b) { return (b[field] < a[field])? 1 : (b[field] > a[field]) ? -1 : 0; });
+                if(typeof data[0][field] === 'string') {
+                  if(reverse) {
+                      data.sort(function (a, b) { return b[field].toLowerCase().localeCompare(a[field].toLowerCase()); });
+                  } else {
+                      data.sort(function (a, b) { return a[field].toLowerCase().localeCompare(b[field].toLowerCase()); });
+                  }
+                } else {
+                  if(reverse) {
+                    data.sort(function (a, b) { return (a[field] < b[field])? 1 : (a[field] > b[field]) ? -1 : 0; });
+                  } else {
+                    data.sort(function (a, b) { return (b[field] < a[field])? 1 : (b[field] > a[field]) ? -1 : 0; });
+                  }
+                }
+
             }
             return data;
         },
