@@ -24,8 +24,8 @@
 
         function readCookie(name) {
           var nameEQ = name + "=",
-            ca = document.cookie.split(';'),
-            i, c;
+              ca = document.cookie.split(';'),
+              i, c;
 
           for (i=0; i < ca.length; i++) {
             c = ca[i];
@@ -45,9 +45,9 @@
           data = encodeURIComponent(JSON.stringify(data));
           // Create cookie.
           if (type === 'session') {
-              createCookie(getSessionName(), data, 365);
+            createCookie(getSessionName(), data, 365);
           } else {
-              createCookie('localStorage', data, 365);
+            createCookie('localStorage', data, 365);
           }
         }
 
@@ -70,7 +70,7 @@
           // If there is no name for this window, set one.
           // To ensure it's unquie use the current timestamp.
           if(!window.name) {
-              window.name = new Date().getTime();
+            window.name = new Date().getTime();
           }
           return 'sessionStorage' + window.name;
         }
@@ -103,9 +103,9 @@
             setData(data);
           },
           setItem: function (key, value) {
-              data[key] = value+''; // forces the value to a string
-              this.length++;
-              setData(data);
+            data[key] = value+''; // forces the value to a string
+            this.length++;
+            setData(data);
           }
         };
       };
@@ -127,13 +127,13 @@
   window.dataHelper = {
     apiUrl: '',
     hash: {
-        continent: '/analytics/dns/continents',
-        country: '/analytics/dns/countries',
-        cdn_country: '/analytics/cdn/countries',
-        provider: '/analytics/dns/provider',
-        cdn_provider: '/analytics/cdn/provider',
-        resolver: '/analytics/dns/resolver',
-        node: '/node'
+      continent: '/analytics/dns/continents',
+      country: '/analytics/dns/countries',
+      cdn_country: '/analytics/cdn/countries',
+      provider: '/analytics/dns/provider',
+      cdn_provider: '/analytics/cdn/provider',
+      resolver: '/analytics/dns/resolver',
+      node: '/node'
     },
     loading: {},
     host: '',
@@ -180,11 +180,11 @@
       ]
     },
     /**
-   * Init Helper
-   * @param apiUrl
-   * @param hash
-   * @param sortByField
-   */
+     * Init Helper
+     * @param apiUrl
+     * @param hash
+     * @param sortByField
+     */
     init: function (apiUrl, hash, sortByField) {
       this.apiUrl = apiUrl || 'api.perfops.net';
       if(typeof hash !== 'undefined') {
@@ -217,7 +217,7 @@
       var localDataExpire = (new Date(localStorage.getItem(dataHelper.getSaveKey(target)+'_expire'))).getTime();
       //If local data is 'OK' run callback function
       if(localData &&  localDataExpire >= (new Date()).getTime() ){
-          if(typeof callback === 'function') callback.apply(_self,[localData, target]);
+        if(typeof callback === 'function') callback.apply(_self,[localData, target]);
       } else {//Else get data from external url
         if(!dataHelper.loading[target]) {
           if(dataHelper.hash[target]){
@@ -243,7 +243,7 @@
           localStorage.setItem(dataHelper.getSaveKey(target)+'_expire', (new Date((new Date()).getTime()  + expire)).toString());
           //run callback with data
           if(typeof callback === 'function') {
-              callback.apply(_self,[data, target]);
+            callback.apply(_self,[data, target]);
           }
 
           dataHelper.loading[target].finished = true;
@@ -337,7 +337,33 @@
       }
     },
     getSaveKey: function(target) {
-        return this.host + '_' + target;
-    }
+      return this.host + '_' + target;
+    },
+    clearAllData: function(exceptionList = []) {
+      if (!exceptionList.length) {
+        localStorage.clear();
+        return true;
+      }
+
+      if (localStorage) {
+        for (var key in localStorage) {
+          if (key === "length"
+              || key.substring(0, 2) === "__"
+              || typeof localStorage[key] !== "string") continue;
+
+          let remove = true;
+
+          for (var eKey in exceptionList) {
+            let preparedKey = this.getSaveKey(exceptionList[eKey]);
+            if (key === preparedKey
+                || key === preparedKey + '_expire') remove = false;
+          }
+
+          if (remove) localStorage.removeItem(key);
+        }
+      }
+
+      return true;
+    },
   };
 })();
