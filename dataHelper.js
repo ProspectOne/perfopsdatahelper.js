@@ -129,6 +129,7 @@
     hash: {
       continent: '/analytics/dns/continents',
       country: '/analytics/dns/countries',
+      state: '/analytics/dns/state',
       cdn_country: '/analytics/cdn/countries',
       cdn_state: '/analytics/cdn/states',
       provider: '/analytics/dns/provider',
@@ -146,6 +147,12 @@
         }
       ],
       country: [
+        {
+          fieldName: 'name',
+          reverse: false
+        }
+      ],
+      state: [
         {
           fieldName: 'name',
           reverse: false
