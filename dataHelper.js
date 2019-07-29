@@ -129,7 +129,9 @@
     hash: {
       continent: '/analytics/dns/continents',
       country: '/analytics/dns/countries',
+      state: '/analytics/dns/state',
       cdn_country: '/analytics/cdn/countries',
+      cdn_state: '/analytics/cdn/states',
       provider: '/analytics/dns/provider',
       cdn_provider: '/analytics/cdn/provider',
       resolver: '/analytics/dns/resolver',
@@ -145,6 +147,12 @@
         }
       ],
       country: [
+        {
+          fieldName: 'name',
+          reverse: false
+        }
+      ],
+      state: [
         {
           fieldName: 'name',
           reverse: false
@@ -167,6 +175,12 @@
         }
       ],
       cdn_country: [
+        {
+          fieldName: 'name',
+          reverse: false
+        }
+      ],
+      cdn_state: [
         {
           fieldName: 'name',
           reverse: false
@@ -197,7 +211,7 @@
     },
     /**
      * Get Data
-     * @param target ['continent','country','cdn_country','provider','cdn_provider','resolver','node']
+     * @param target ['continent','country','cdn_country','cdn_state','provider','cdn_provider','resolver','node']
      * @param callback(data, target)
      * @param apiUrl
      * @param expire data expire in milliseconds
