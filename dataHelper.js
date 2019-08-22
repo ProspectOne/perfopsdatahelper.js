@@ -133,6 +133,7 @@
       cdn_country: '/analytics/cdn/countries',
       cdn_state: '/analytics/cdn/states',
       provider: '/analytics/dns/provider',
+      cloud_provider: '/analytics/cloud/provider',
       cdn_provider: '/analytics/cdn/provider',
       resolver: '/analytics/dns/resolver',
       node: '/node'
@@ -169,6 +170,12 @@
           fieldName: 'isRootServer',
           reverse: false
         },
+        {
+          fieldName: 'name',
+          reverse: false
+        }
+      ],
+      cloud_provider: [
         {
           fieldName: 'name',
           reverse: false
